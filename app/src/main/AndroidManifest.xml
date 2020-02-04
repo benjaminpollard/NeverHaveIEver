@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:name=".App"
         android:theme="@style/AppTheme">
-        <activity android:name=".Views.NeverHaveIEverActivity"
+        <activity android:name=".Views.MenuActivity"
             android:label="ben">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

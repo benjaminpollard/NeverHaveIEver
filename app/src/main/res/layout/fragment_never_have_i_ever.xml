@@ -5,7 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/never_have_i_ever_activity_background"
-    tools:context=".Views.NeverHaveIEverActivity">
+>
+
+    <LinearLayout
+        android:id="@+id/top"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="16dp">
+
+    </LinearLayout>
 
     <com.mindorks.placeholderview.SwipePlaceHolderView
         android:id="@+id/swipeView"
@@ -15,7 +26,9 @@
         app:layout_constraintBottom_toTopOf="@+id/banner_container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/top" >
+
+    </com.mindorks.placeholderview.SwipePlaceHolderView>
 
     <LinearLayout
         android:id="@+id/banner_container"
@@ -25,5 +38,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
