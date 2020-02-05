@@ -10,6 +10,7 @@ import com.idea.group.neverhaveiever.R;
 import com.mindorks.placeholderview.SwipePlaceHolderView;
 import com.mindorks.placeholderview.annotations.Layout;
 import com.mindorks.placeholderview.annotations.NonReusable;
+import com.mindorks.placeholderview.annotations.Position;
 import com.mindorks.placeholderview.annotations.Resolve;
 import com.mindorks.placeholderview.annotations.View;
 import com.mindorks.placeholderview.annotations.swipe.SwipeCancelState;
@@ -23,15 +24,18 @@ import com.mindorks.placeholderview.annotations.swipe.SwipeOutState;
 public class IHaveNeverCardUIModel {
 
     @View(R.id.never_card_view_info)
-    public TextView infoText;
+     TextView infoText;
 
     @View(R.id.never_card_view_next)
-    public Button next;
+     Button next;
 
     public IHaveNeverCardAPIModel mProfile;
     public Context mContext;
     public SwipePlaceHolderView mSwipeView;
     android.view.View.OnClickListener onNext;
+
+    @Position
+    public int position;
 
     public IHaveNeverCardUIModel(Context context, IHaveNeverCardAPIModel profile, SwipePlaceHolderView swipeView,android.view.View.OnClickListener onNext ) {
         mContext = context;

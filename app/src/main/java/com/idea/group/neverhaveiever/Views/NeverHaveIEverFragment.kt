@@ -2,13 +2,14 @@ package com.idea.group.neverhaveiever.Views
 
 import android.content.Context
 import android.graphics.Color
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.facebook.ads.AdSettings
 import com.facebook.ads.AdSize
@@ -16,6 +17,7 @@ import com.facebook.ads.AdView
 import com.idea.group.neverhaveiever.Models.APIModels.IHaveNeverCardAPIModel
 import com.idea.group.neverhaveiever.Models.UIModels.IHaveNeverCardUIModel
 import com.idea.group.neverhaveiever.R
+import com.idea.group.neverhaveiever.Views.Interfaces.IMenuHost
 import com.mindorks.placeholderview.SwipeDecor
 import com.mindorks.placeholderview.SwipePlaceHolderView
 import com.mindorks.placeholderview.SwipeViewBuilder
@@ -49,13 +51,26 @@ class NeverHaveIEverFragment : Fragment() {
 
         // Find the Ad Container
         val adContainer = view.findViewById(R.id.banner_container) as LinearLayout
-        this.activity!!.window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
+        //this.activity!!.window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
         // Add the ad view to your activity layout
         adView = AdView(this.context, "638417063572474_638420086905505", AdSize.BANNER_HEIGHT_50)
         adContainer.addView(adView)
 
         adView!!.loadAd()
-        mSwipeView = view.findViewById(R.id.swipeView);
+        mSwipeView = view.findViewById(R.id.swipeView)
+
+
+
+        topHolder = view.findViewById(R.id.top)
+        val image = ImageView(this.context)
+        image.setImageDrawable(this.context!!.resources.getDrawable(R.drawable.ic_menu_black_24dp))
+        image.setColorFilter(Color.argb(255, 255, 255, 255))
+        image.isClickable = true
+        image.setOnClickListener(View.OnClickListener {
+            listener?.showMenu()
+        })
+        topHolder!!.addView(image)
+
         mSwipeView!!.getBuilder<SwipePlaceHolderView, SwipeViewBuilder<SwipePlaceHolderView>>()
             .setDisplayViewCount(3)
             .setSwipeDecor(
@@ -69,28 +84,28 @@ class NeverHaveIEverFragment : Fragment() {
         val onClick =  View.OnClickListener {
             mSwipeView!!.doSwipe(true)
         }
+
         mSwipeView!!.addView( IHaveNeverCardUIModel(this.context, IHaveNeverCardAPIModel(id = "1",info = "Had Sex on a Boat" ),mSwipeView,onClick));
         mSwipeView!!.addView( IHaveNeverCardUIModel(this.context, IHaveNeverCardAPIModel(id = "2",info = "Fallen down a hill drunk"),mSwipeView,onClick));
 
-        topHolder = view.findViewById(R.id.top)
-        val image = ImageView(this.context)
-        image.setImageDrawable(this.context!!.resources.getDrawable(R.drawable.ic_menu_black_24dp))
-        image.setColorFilter(Color.argb(255, 255, 255, 255))
-        image.isClickable = true
-        image.setOnClickListener(View.OnClickListener {
-            listener?.showMenu()
-        })
-        topHolder!!.addView(image)
+
         return view
+    }
+
+    override fun onStart() {
+        super.onStart()
+
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is IMenuHost) {
             listener = context
+
         } else {
             throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
         }
+
     }
 
     override fun onDetach() {
@@ -108,7 +123,10 @@ class NeverHaveIEverFragment : Fragment() {
 
 
     companion object {
-
+        @JvmStatic
+        public val CARDS_TEEN = "teen"
+        @JvmStatic
+        public val CARDS_ADULT = "adult"
         @JvmStatic
         fun newInstance(param1: String) =
             NeverHaveIEverFragment().apply {

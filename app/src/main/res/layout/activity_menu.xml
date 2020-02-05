@@ -39,19 +39,7 @@
                 android:orientation="vertical">
 
                 <Button
-                    android:id="@+id/menu1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="48dp"
-                    android:minWidth="200dp"
-                    android:textSize="22sp"
-                    android:textColor="@android:color/white"
-                    android:fontFamily="sans-serif-medium"
-                    android:background="@drawable/menu_button"
-                    android:text="Kids" />
-
-                <Button
-                    android:id="@+id/menu2"
+                    android:id="@+id/menu_item_teen"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="48dp"
@@ -61,10 +49,10 @@
                     android:fontFamily="sans-serif-medium"
 
                     android:background="@drawable/menu_button"
-                    android:text="Teens" />
+                    android:text="Teen" />
 
                 <Button
-                    android:id="@+id/menu3"
+                    android:id="@+id/menu_item_adult"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="48dp"
@@ -77,7 +65,7 @@
                     android:text="Adult" />
 
                 <Button
-                    android:id="@+id/settings"
+                    android:id="@+id/menu_item_settings"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="48dp"
