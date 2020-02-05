@@ -2,6 +2,7 @@ package com.idea.group.neverhaveiever
 
 import android.app.Application
 import com.facebook.ads.AudienceNetworkAds
+import io.realm.Realm
 
 
 class App : Application()
@@ -10,5 +11,6 @@ class App : Application()
         super.onCreate()
         // Initialize the Audience Network SDK
         AudienceNetworkAds.initialize(this)
+        Realm.init(this)
     }
 }

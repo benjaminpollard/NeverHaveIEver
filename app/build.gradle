@@ -50,6 +50,9 @@ dependencies {
     //networking
     implementation "com.squareup.retrofit2:converter-moshi:2.4.0"
     implementation 'com.squareup.retrofit2:retrofit:2.7.1'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.0"
+
+
     //database
     implementation 'mosquito.digital.Persistence:MDPersistences:0.2.0'
 
@@ -61,4 +64,8 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    //misc
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
 }
