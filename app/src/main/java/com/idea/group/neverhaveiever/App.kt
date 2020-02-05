@@ -9,8 +9,10 @@ class App : Application()
 {
     override fun onCreate() {
         super.onCreate()
+
         // Initialize the Audience Network SDK
-        AudienceNetworkAds.initialize(this)
+        if (BuildConfig.ADS_ENABLED) AudienceNetworkAds.initialize(this)
+
         Realm.init(this)
     }
 }

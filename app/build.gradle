@@ -16,6 +16,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("boolean", "ADS_ENABLED", "true")
     }
     buildTypes {
         release {
@@ -27,6 +28,18 @@ android {
         compileOptions {
             sourceCompatibility 1.8
             targetCompatibility 1.8
+        }
+    }
+    flavorDimensions "environment"
+    productFlavors {
+        dev {
+            dimension "environment"
+            applicationId "com.idea.group.neverhaveiever.dev"
+            buildConfigField("boolean", "ADS_ENABLED", "false")
+        }
+        prod {
+            dimension "environment"
+            applicationId "com.idea.group.neverhaveiever"
         }
     }
 }

@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import com.facebook.ads.AdSettings
 import com.facebook.ads.AdSize
 import com.facebook.ads.AdView
+import com.idea.group.neverhaveiever.BuildConfig
 import com.idea.group.neverhaveiever.Controllers.NeverHaveIEverController
 import com.idea.group.neverhaveiever.Models.APIModels.IHaveNeverCardAPIModel
 import com.idea.group.neverhaveiever.R
@@ -55,15 +56,10 @@ class NeverHaveIEverFragment : Fragment() , IOnCardSwipe {
             R.layout.fragment_never_have_i_ever,
             container, false
         )
-        AdSettings.addTestDevice("HASHED ID")
 
-        val adContainer = view.findViewById(R.id.banner_container) as LinearLayout
-
-        adView = AdView(this.context, "638417063572474_638420086905505", AdSize.BANNER_HEIGHT_50)
-        adContainer.addView(adView)
-
-        adView!!.loadAd()
-
+        if (BuildConfig.ADS_ENABLED) {
+            loadAd(view)
+        }
 
         topHolder = view.findViewById(R.id.top)
 
@@ -71,9 +67,9 @@ class NeverHaveIEverFragment : Fragment() , IOnCardSwipe {
         image.setImageDrawable(this.context!!.resources.getDrawable(R.drawable.ic_menu_black_24dp))
         image.setColorFilter(Color.argb(255, 255, 255, 255))
         image.isClickable = true
-        image.setOnClickListener(View.OnClickListener {
+        image.setOnClickListener {
             listener?.showMenu()
-        })
+        }
 
         topHolder!!.addView(image)
 
@@ -100,6 +96,18 @@ class NeverHaveIEverFragment : Fragment() , IOnCardSwipe {
             refresherView!!.visibility = View.GONE
         }
         return view
+    }
+
+    private fun loadAd(view: View) {
+        AdSettings.addTestDevice("HASHED ID")
+
+        val adContainer = view.findViewById(R.id.banner_container) as LinearLayout
+
+        adView =
+            AdView(this.context, "638417063572474_638420086905505", AdSize.BANNER_HEIGHT_50)
+        adContainer.addView(adView)
+
+        adView!!.loadAd()
     }
 
     private fun setUpTestData(onClick: View.OnClickListener) {
@@ -147,13 +155,11 @@ class NeverHaveIEverFragment : Fragment() , IOnCardSwipe {
         super.onDestroy()
     }
 
-
-
     companion object {
         @JvmStatic
-        public val CARDS_TEEN = "teen"
+        val CARDS_TEEN = "teen"
         @JvmStatic
-        public val CARDS_ADULT = "adult"
+        val CARDS_ADULT = "adult"
         @JvmStatic
         fun newInstance(param1: String) =
             NeverHaveIEverFragment().apply {
