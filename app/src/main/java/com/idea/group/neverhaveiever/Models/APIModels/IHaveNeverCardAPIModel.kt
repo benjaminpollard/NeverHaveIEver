@@ -8,4 +8,4 @@ import io.realm.annotations.RealmClass
 @RealmClass
 
 data class IHaveNeverCardAPIModel(@PrimaryKey var id: String = "",
-                                  var info: String = "") : RealmObject()
+                                  var info: String = "",var seen: Boolean,var votedBad: Boolean) : RealmObject()

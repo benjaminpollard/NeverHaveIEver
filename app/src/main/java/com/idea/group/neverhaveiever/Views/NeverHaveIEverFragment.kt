@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import com.facebook.ads.AdSettings
 import com.facebook.ads.AdSize
 import com.facebook.ads.AdView
+import com.idea.group.neverhaveiever.Controllers.NeverHaveIEverController
 import com.idea.group.neverhaveiever.Models.APIModels.IHaveNeverCardAPIModel
 import com.idea.group.neverhaveiever.R
 import com.idea.group.neverhaveiever.Views.CustomViews.IHaveNeverCardView
@@ -21,12 +22,13 @@ import com.idea.group.neverhaveiever.Views.Interfaces.IOnCardSwipe
 import com.mindorks.placeholderview.SwipeDecor
 import com.mindorks.placeholderview.SwipePlaceHolderView
 import com.mindorks.placeholderview.SwipeViewBuilder
+import mosquito.digital.template.mdpersistence.PersistenceService
 
 private const val ARG_PARAM1 = "param1"
 
 class NeverHaveIEverFragment : Fragment() , IOnCardSwipe {
 
-    private var param1: String? = null
+    private var contentType: String? = null
     private var listener: IMenuHost? = null
     private var mSwipeView: SwipePlaceHolderView? = null
     private var adView: AdView? = null
@@ -34,11 +36,14 @@ class NeverHaveIEverFragment : Fragment() , IOnCardSwipe {
     private var refresherView : View? = null
     private lateinit var refresherButton : Button
     private var cardCount = 0;
+    private lateinit var controller : NeverHaveIEverController;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
+            contentType = it.getString(ARG_PARAM1)
+            controller = NeverHaveIEverController(PersistenceService(),contentType!!)
         }
     }
 
@@ -102,7 +107,7 @@ class NeverHaveIEverFragment : Fragment() , IOnCardSwipe {
         mSwipeView!!.addView(
             IHaveNeverCardView(
                 this.context,
-                IHaveNeverCardAPIModel(id = "1", info = "Had Sex on a Boat"),
+                IHaveNeverCardAPIModel(id = "1", info = "Had Sex on a Boat",votedBad = false, seen = false),
                 mSwipeView,
                 onClick,
                 this
@@ -111,17 +116,12 @@ class NeverHaveIEverFragment : Fragment() , IOnCardSwipe {
         mSwipeView!!.addView(
             IHaveNeverCardView(
                 this.context,
-                IHaveNeverCardAPIModel(id = "2", info = "Fallen down a hill drunk"),
+                IHaveNeverCardAPIModel(id = "2", info = "Fallen down a hill drunk",votedBad = false, seen = false),
                 mSwipeView,
                 onClick,
                 this
             )
-        );
-    }
-
-    override fun onStart() {
-        super.onStart()
-
+        )
     }
 
     override fun onAttach(context: Context) {
@@ -164,9 +164,14 @@ class NeverHaveIEverFragment : Fragment() , IOnCardSwipe {
     }
 
     override fun OnSwipe(pos: Int) {
+        controller.ItemSeen(pos)
       if (cardCount == pos)
         {
             refresherView!!.visibility = View.VISIBLE
         }
+    }
+
+    override fun OnBadSwipe(pos: Int) {
+        controller.ItemVotedBad(pos)
     }
 }

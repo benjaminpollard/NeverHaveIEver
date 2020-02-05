@@ -78,6 +78,7 @@ public class IHaveNeverCardView {
 
     @SwipeOutState
     public void onSwipeOutState(){
+        OnCardSwipe.OnBadSwipe(position);
         Log.d("EVENT", "onSwipeOutState");
     }
 }
