@@ -1,4 +1,4 @@
-package com.idea.group.neverhaveiever.Models.UIModels;
+package com.idea.group.neverhaveiever.Views.CustomViews;
 
 import android.content.Context;
 import android.util.Log;
@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.idea.group.neverhaveiever.Models.APIModels.IHaveNeverCardAPIModel;
 import com.idea.group.neverhaveiever.R;
+import com.idea.group.neverhaveiever.Views.Interfaces.IOnCardSwipe;
 import com.mindorks.placeholderview.SwipePlaceHolderView;
 import com.mindorks.placeholderview.annotations.Layout;
 import com.mindorks.placeholderview.annotations.NonReusable;
@@ -21,7 +22,7 @@ import com.mindorks.placeholderview.annotations.swipe.SwipeOutState;
 
 @NonReusable
 @Layout(R.layout.never_card_view)
-public class IHaveNeverCardUIModel {
+public class IHaveNeverCardView {
 
     @View(R.id.never_card_view_info)
      TextView infoText;
@@ -33,15 +34,16 @@ public class IHaveNeverCardUIModel {
     public Context mContext;
     public SwipePlaceHolderView mSwipeView;
     android.view.View.OnClickListener onNext;
-
+    IOnCardSwipe OnCardSwipe;
     @Position
     public int position;
 
-    public IHaveNeverCardUIModel(Context context, IHaveNeverCardAPIModel profile, SwipePlaceHolderView swipeView,android.view.View.OnClickListener onNext ) {
+    public IHaveNeverCardView(Context context, IHaveNeverCardAPIModel profile, SwipePlaceHolderView swipeView, android.view.View.OnClickListener onNext , IOnCardSwipe OnCardSwipe) {
         mContext = context;
         mProfile = profile;
         mSwipeView = swipeView;
         this.onNext = onNext;
+        this.OnCardSwipe = OnCardSwipe;
 
     }
 
@@ -55,6 +57,7 @@ public class IHaveNeverCardUIModel {
     @SwipeOut
     public void onSwipedOut(){
         Log.d("EVENT", "onSwipedOut");
+        OnCardSwipe.OnSwipe(position);
     }
 
     @SwipeCancelState
@@ -65,6 +68,7 @@ public class IHaveNeverCardUIModel {
     @SwipeIn
     public void onSwipeIn(){
         Log.d("EVENT", "onSwipedIn");
+        OnCardSwipe.OnSwipe(position);
     }
 
     @SwipeInState

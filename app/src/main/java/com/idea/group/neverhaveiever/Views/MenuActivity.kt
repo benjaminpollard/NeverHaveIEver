@@ -1,6 +1,7 @@
 package com.idea.group.neverhaveiever.Views
 
 import android.annotation.SuppressLint
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.Gravity
 import android.view.MenuItem
@@ -14,19 +15,40 @@ import com.google.android.material.navigation.NavigationView
 import com.idea.group.neverhaveiever.R
 import com.idea.group.neverhaveiever.Views.Interfaces.IMenuHost
 
+
 class MenuActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelectedListener,
     IMenuHost
 {
     var drawer: DrawerLayout? = null
     var fragmentHolder : FrameLayout? = null
+    var prefs: SharedPreferences? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
         drawer = findViewById(R.id.drawer_layout)
         fragmentHolder = findViewById(R.id.fragment_holder);
+
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
-        changeFragment(CategorySelectorFragment.newInstance())
+        prefs = getSharedPreferences(this.packageName, MODE_PRIVATE);
+
+        if (prefs!!.getBoolean("firstrun", true)) {
+            // Do first run stuff here then set 'firstrun' as false
+            // using the following line to edit/commit prefs
+            prefs!!.edit().putBoolean("firstrun", false).apply()
+            changeFragment(CategorySelectorFragment.newInstance())
+        }else
+        {
+            if (NeverHaveIEverFragment.CARDS_ADULT == prefs!!.getString("screen selected",""))
+            {
+                GoToIHaveNeverScreen(NeverHaveIEverFragment.CARDS_ADULT)
+            }
+            else
+            {
+                GoToIHaveNeverScreen(NeverHaveIEverFragment.CARDS_TEEN)
+            }
+        }
+
         setUpMenuItems()
     }
 
@@ -35,16 +57,19 @@ class MenuActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         val teenButton : Button = findViewById(R.id.menu_item_teen)
         teenButton.setOnClickListener{
             GoToIHaveNeverScreen(NeverHaveIEverFragment.CARDS_TEEN)
+            drawer!!.closeDrawer(Gravity.LEFT)
         }
 
         val adultButton : Button = findViewById(R.id.menu_item_adult)
         adultButton.setOnClickListener{
             GoToIHaveNeverScreen(NeverHaveIEverFragment.CARDS_ADULT)
+            drawer!!.closeDrawer(Gravity.LEFT)
         }
 
         val settingsButton  : Button = findViewById(R.id.menu_item_settings)
         settingsButton.setOnClickListener{
             GoToIHaveNeverScreen(NeverHaveIEverFragment.CARDS_TEEN)
+            drawer!!.closeDrawer(Gravity.LEFT)
         }
     }
 
@@ -58,6 +83,7 @@ class MenuActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     }
 
     override fun GoToIHaveNeverScreen(screen: String) {
+        prefs!!.edit().putString("screen selected",screen).apply()
         changeFragment(NeverHaveIEverFragment.newInstance(screen))
     }
 
@@ -66,6 +92,7 @@ class MenuActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.fragment_holder, fragment, "")
+            .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
             .addToBackStack("")
             .commit()
     }

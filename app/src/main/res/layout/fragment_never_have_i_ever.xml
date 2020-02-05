@@ -26,10 +26,11 @@
         android:id="@+id/top"
         android:layout_width="25dp"
         android:layout_height="25dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="16dp">
+        app:layout_constraintTop_toTopOf="parent">
 
     </LinearLayout>
 
