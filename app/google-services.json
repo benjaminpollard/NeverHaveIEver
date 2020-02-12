@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "471339747228",
+    "firebase_url": "https://neverhaveieverapp.firebaseio.com",
+    "project_id": "neverhaveieverapp",
+    "storage_bucket": "neverhaveieverapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:471339747228:android:f7c2209a4e4f64b4f22a59",
+        "android_client_info": {
+          "package_name": "com.idea.group.neverhaveiever"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "471339747228-77mfds7rf8bkiiijvla3r33rfh1ihn12.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3_zYKEQ9OT5QYPgJ1vXGbR2ltpHZydZU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "471339747228-77mfds7rf8bkiiijvla3r33rfh1ihn12.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "471339747228-86thi0vea5oif5k93skkmh81qb9fh425.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.idea.group.neverhaveiever.NeverHaveIEver"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -6,6 +6,8 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'kotlin-kapt'
 
+apply plugin: 'com.google.gms.google-services'
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.0"
@@ -34,12 +36,10 @@ android {
     productFlavors {
         dev {
             dimension "environment"
-            applicationId "com.idea.group.neverhaveiever.dev"
             buildConfigField("boolean", "ADS_ENABLED", "false")
         }
         prod {
             dimension "environment"
-            applicationId "com.idea.group.neverhaveiever"
         }
     }
 }
@@ -72,6 +72,8 @@ dependencies {
     //ads
     implementation 'com.facebook.android:audience-network-sdk:5.+'
 
+    //analytics
+    implementation 'com.google.firebase:firebase-analytics:17.2.2'
 
     //testing
     testImplementation 'junit:junit:4.12'
