@@ -17,6 +17,7 @@ import com.idea.group.neverhaveiever.BuildConfig
 import com.idea.group.neverhaveiever.Controllers.NeverHaveIEverController
 import com.idea.group.neverhaveiever.Models.APIModels.IHaveNeverCardAPIModel
 import com.idea.group.neverhaveiever.R
+import com.idea.group.neverhaveiever.Services.AnalyticsService
 import com.idea.group.neverhaveiever.Views.CustomViews.IHaveNeverCardView
 import com.idea.group.neverhaveiever.Views.Interfaces.IMenuHost
 import com.idea.group.neverhaveiever.Views.Interfaces.IOnCardSwipe
@@ -44,7 +45,7 @@ class NeverHaveIEverFragment : Fragment() , IOnCardSwipe {
 
         arguments?.let {
             contentType = it.getString(ARG_PARAM1)
-            controller = NeverHaveIEverController(PersistenceService(),contentType!!)
+            controller = NeverHaveIEverController(PersistenceService(), AnalyticsService(), contentType!!)
         }
     }
 
@@ -115,7 +116,7 @@ class NeverHaveIEverFragment : Fragment() , IOnCardSwipe {
         mSwipeView!!.addView(
             IHaveNeverCardView(
                 this.context,
-                IHaveNeverCardAPIModel(id = "1", info = "Had Sex on a Boat",votedBad = false, seen = false),
+                IHaveNeverCardAPIModel(id = "1", info = "Had Sex on a Boat",votedBad = false, seen = false, cardType = "adult"),
                 mSwipeView,
                 onClick,
                 this
@@ -124,7 +125,7 @@ class NeverHaveIEverFragment : Fragment() , IOnCardSwipe {
         mSwipeView!!.addView(
             IHaveNeverCardView(
                 this.context,
-                IHaveNeverCardAPIModel(id = "2", info = "Fallen down a hill drunk",votedBad = false, seen = false),
+                IHaveNeverCardAPIModel(id = "2", info = "Fallen down a hill drunk",votedBad = false, seen = false, cardType = "teen"),
                 mSwipeView,
                 onClick,
                 this
