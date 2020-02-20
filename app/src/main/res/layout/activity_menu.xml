@@ -43,26 +43,52 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="48dp"
-                    android:minWidth="200dp"
-                    android:textSize="22sp"
-                    android:textColor="@android:color/white"
-                    android:fontFamily="sans-serif-medium"
-
                     android:background="@drawable/menu_button"
-                    android:text="Teen" />
+                    android:fontFamily="sans-serif-medium"
+                    android:minWidth="200dp"
+                    android:text="Naughty"
+
+                    android:textColor="@android:color/white"
+                    android:textSize="22sp" />
 
                 <Button
                     android:id="@+id/menu_item_adult"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="48dp"
-                    android:minWidth="200dp"
-                    android:textSize="22sp"
-                    android:textColor="@android:color/white"
-                    android:fontFamily="sans-serif-medium"
-
                     android:background="@drawable/menu_button"
-                    android:text="Adult" />
+                    android:fontFamily="sans-serif-medium"
+                    android:minWidth="200dp"
+                    android:text="Clean"
+
+                    android:textColor="@android:color/white"
+                    android:textSize="22sp" />
+
+                <Button
+                    android:id="@+id/menu_item_adult2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="48dp"
+                    android:background="@drawable/menu_button"
+                    android:fontFamily="sans-serif-medium"
+                    android:minWidth="200dp"
+                    android:text="Exposed"
+
+                    android:textColor="@android:color/white"
+                    android:textSize="22sp" />
+
+                <Button
+                    android:id="@+id/menu_item_adult3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="48dp"
+                    android:background="@drawable/menu_button"
+                    android:fontFamily="sans-serif-medium"
+                    android:minWidth="200dp"
+                    android:text="Couples"
+
+                    android:textColor="@android:color/white"
+                    android:textSize="22sp" />
 
                 <Button
                     android:id="@+id/menu_item_settings"

@@ -3,6 +3,7 @@ package com.idea.group.neverhaveiever.Views
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,9 +11,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
-import com.facebook.ads.AdSettings
-import com.facebook.ads.AdSize
-import com.facebook.ads.AdView
+import com.facebook.ads.*
 import com.idea.group.neverhaveiever.BuildConfig
 import com.idea.group.neverhaveiever.Controllers.NeverHaveIEverController
 import com.idea.group.neverhaveiever.Models.APIModels.IHaveNeverCardAPIModel
@@ -26,6 +25,7 @@ import com.mindorks.placeholderview.SwipePlaceHolderView
 import com.mindorks.placeholderview.SwipeViewBuilder
 import mosquito.digital.template.mdpersistence.PersistenceService
 
+
 private const val ARG_PARAM1 = "param1"
 
 class NeverHaveIEverFragment : Fragment() , IOnCardSwipe {
@@ -37,8 +37,11 @@ class NeverHaveIEverFragment : Fragment() , IOnCardSwipe {
     private var topHolder : LinearLayout? = null
     private var refresherView : View? = null
     private lateinit var refresherButton : Button
-    private var cardCount = 0;
+    private var cardCount = 0
     private lateinit var controller : NeverHaveIEverController
+    private lateinit var  interstitialAd : InterstitialAd
+    private var swipesSinceLastAd = 0
+    private val NUMBER_OF_SWIPES_BEFORE_AD = 14
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +57,7 @@ class NeverHaveIEverFragment : Fragment() , IOnCardSwipe {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         val view: View = inflater.inflate(
             R.layout.fragment_never_have_i_ever,
             container, false
@@ -75,6 +79,11 @@ class NeverHaveIEverFragment : Fragment() , IOnCardSwipe {
 
         topHolder!!.addView(image)
 
+        setUpSwipeView(view)
+        return view
+    }
+
+    private fun setUpSwipeView(view: View) {
         mSwipeView = view.findViewById(R.id.swipeView)
         mSwipeView!!.getBuilder<SwipePlaceHolderView, SwipeViewBuilder<SwipePlaceHolderView>>()
             .setDisplayViewCount(3)
@@ -86,18 +95,17 @@ class NeverHaveIEverFragment : Fragment() , IOnCardSwipe {
                     .setSwipeInMsgLayoutId(R.layout.swipe_in_view)
                     .setSwipeOutMsgLayoutId(R.layout.swipe_out_view)
             )
-        val onClick =  View.OnClickListener {
+        val onClick = View.OnClickListener {
             mSwipeView!!.doSwipe(true)
         }
         setUpTestData(onClick)
 
         refresherView = view.findViewById(R.id.refresh_view)
         refresherButton = view.findViewById(R.id.never_card_view_reload);
-        refresherButton.setOnClickListener{
+        refresherButton.setOnClickListener {
             setUpTestData(onClick)
             refresherView!!.visibility = View.GONE
         }
-        return view
     }
 
     private fun loadAd(view: View) {
@@ -110,6 +118,36 @@ class NeverHaveIEverFragment : Fragment() , IOnCardSwipe {
         adContainer.addView(adView)
 
         adView!!.loadAd()
+
+        interstitialAd = InterstitialAd(this.context,"638417063572474_653995195347994")
+        interstitialAd.setAdListener(object : InterstitialAdListener {
+            override fun onInterstitialDisplayed(ad: Ad) { // Interstitial ad displayed callback
+                Log.e("", "Interstitial ad displayed.")
+            }
+
+            override fun onInterstitialDismissed(ad: Ad) { // Interstitial dismissed callback
+                Log.e("", "Interstitial ad dismissed.")
+            }
+
+            override fun onError(ad: Ad, adError: AdError) { // Ad error callback
+                Log.e("", "Interstitial ad failed to load: " + adError.errorMessage)
+            }
+
+            override fun onAdLoaded(ad: Ad) { // Interstitial ad is loaded and ready to be displayed
+                Log.d("", "Interstitial ad is loaded and ready to be displayed!")
+                // Show the ad
+                interstitialAd.show()
+            }
+
+            override fun onAdClicked(ad: Ad) { // Ad clicked callback
+                Log.d("", "Interstitial ad clicked!")
+            }
+
+            override fun onLoggingImpression(ad: Ad) { // Ad impression logged callback
+                Log.d("", "Interstitial ad impression logged!")
+            }
+        })
+
     }
 
     private fun setUpTestData(onClick: View.OnClickListener) {
@@ -154,6 +192,10 @@ class NeverHaveIEverFragment : Fragment() , IOnCardSwipe {
         if (adView != null) {
             adView!!.destroy()
         }
+        if (interstitialAd != null) {
+            interstitialAd.destroy()
+        }
+
         super.onDestroy()
     }
 
@@ -176,6 +218,16 @@ class NeverHaveIEverFragment : Fragment() , IOnCardSwipe {
       if (cardCount == pos)
         {
             refresherView!!.visibility = View.VISIBLE
+        }
+
+        if(swipesSinceLastAd >= NUMBER_OF_SWIPES_BEFORE_AD)
+        {
+            interstitialAd.loadAd()
+            swipesSinceLastAd = 0
+        }
+        else
+        {
+            swipesSinceLastAd++
         }
     }
 
