@@ -31,12 +31,12 @@ class CategorySelectorFragment : Fragment() {
 
         val adultButton : Button = view.findViewById(R.id.category_selector_adults)
         adultButton.setOnClickListener {
-            listener!!.GoToIHaveNeverScreen(NeverHaveIEverFragment.CARDS_ADULT)
+            listener!!.GoToIHaveNeverScreen(NeverHaveIEverFragment.CARDS_CLEAN)
         }
 
         val teenButton : Button = view.findViewById(R.id.category_selector_teen)
         teenButton.setOnClickListener {
-            listener!!.GoToIHaveNeverScreen(NeverHaveIEverFragment.CARDS_TEEN)
+            listener!!.GoToIHaveNeverScreen(NeverHaveIEverFragment.CARDS_NAUGHTY)
         }
 
         AdSettings.addTestDevice("HASHED ID")

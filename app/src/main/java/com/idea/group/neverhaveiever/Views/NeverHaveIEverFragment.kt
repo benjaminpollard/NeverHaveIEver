@@ -201,9 +201,13 @@ class NeverHaveIEverFragment : Fragment() , IOnCardSwipe {
 
     companion object {
         @JvmStatic
-        val CARDS_TEEN = "teen"
+        val CARDS_NAUGHTY = "NAUGHTY"
         @JvmStatic
-        val CARDS_ADULT = "adult"
+        val CARDS_CLEAN = "CLEAN"
+        @JvmStatic
+        val CARDS_EXPOSED = "EXPOSED"
+        @JvmStatic
+        val CARDS_COUPLES = "COUPLES"
         @JvmStatic
         fun newInstance(param1: String) =
             NeverHaveIEverFragment().apply {

@@ -39,7 +39,7 @@
                 android:orientation="vertical">
 
                 <Button
-                    android:id="@+id/menu_item_teen"
+                    android:id="@+id/menu_item_naughty"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="48dp"
@@ -52,7 +52,7 @@
                     android:textSize="22sp" />
 
                 <Button
-                    android:id="@+id/menu_item_adult"
+                    android:id="@+id/menu_item_clean"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="48dp"
@@ -65,7 +65,7 @@
                     android:textSize="22sp" />
 
                 <Button
-                    android:id="@+id/menu_item_adult2"
+                    android:id="@+id/menu_item_exposed"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="48dp"
@@ -78,7 +78,7 @@
                     android:textSize="22sp" />
 
                 <Button
-                    android:id="@+id/menu_item_adult3"
+                    android:id="@+id/menu_item_couples"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="48dp"

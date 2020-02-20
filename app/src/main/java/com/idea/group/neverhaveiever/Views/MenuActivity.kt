@@ -39,13 +39,13 @@ class MenuActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
             changeFragment(CategorySelectorFragment.newInstance())
         }else
         {
-            if (NeverHaveIEverFragment.CARDS_ADULT == prefs!!.getString("screen selected",""))
+            if (NeverHaveIEverFragment.CARDS_CLEAN == prefs!!.getString("screen selected",""))
             {
-                GoToIHaveNeverScreen(NeverHaveIEverFragment.CARDS_ADULT)
+                GoToIHaveNeverScreen(NeverHaveIEverFragment.CARDS_CLEAN)
             }
             else
             {
-                GoToIHaveNeverScreen(NeverHaveIEverFragment.CARDS_TEEN)
+                GoToIHaveNeverScreen(NeverHaveIEverFragment.CARDS_NAUGHTY)
             }
         }
 
@@ -54,21 +54,33 @@ class MenuActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
     private fun setUpMenuItems() {
 
-        val teenButton : Button = findViewById(R.id.menu_item_teen)
+        val teenButton : Button = findViewById(R.id.menu_item_naughty)
         teenButton.setOnClickListener{
-            GoToIHaveNeverScreen(NeverHaveIEverFragment.CARDS_TEEN)
+            GoToIHaveNeverScreen(NeverHaveIEverFragment.CARDS_NAUGHTY)
             drawer!!.closeDrawer(Gravity.LEFT)
         }
 
-        val adultButton : Button = findViewById(R.id.menu_item_adult)
+        val adultButton : Button = findViewById(R.id.menu_item_clean)
         adultButton.setOnClickListener{
-            GoToIHaveNeverScreen(NeverHaveIEverFragment.CARDS_ADULT)
+            GoToIHaveNeverScreen(NeverHaveIEverFragment.CARDS_CLEAN)
+            drawer!!.closeDrawer(Gravity.LEFT)
+        }
+
+        val exposedButton : Button = findViewById(R.id.menu_item_exposed)
+        exposedButton.setOnClickListener{
+            GoToIHaveNeverScreen(NeverHaveIEverFragment.CARDS_EXPOSED)
+            drawer!!.closeDrawer(Gravity.LEFT)
+        }
+
+        val couplesButton : Button = findViewById(R.id.menu_item_couples)
+        couplesButton.setOnClickListener{
+            GoToIHaveNeverScreen(NeverHaveIEverFragment.CARDS_NAUGHTY)
             drawer!!.closeDrawer(Gravity.LEFT)
         }
 
         val settingsButton  : Button = findViewById(R.id.menu_item_settings)
         settingsButton.setOnClickListener{
-            GoToIHaveNeverScreen(NeverHaveIEverFragment.CARDS_TEEN)
+            GoToIHaveNeverScreen(NeverHaveIEverFragment.CARDS_NAUGHTY)
             drawer!!.closeDrawer(Gravity.LEFT)
         }
     }
