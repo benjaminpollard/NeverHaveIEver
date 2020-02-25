@@ -1,12 +1,15 @@
 package com.idea.group.neverhaveiever.Controllers
 
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.idea.group.neverhaveiever.Models.APIModels.IHaveNeverCardAPIModel
 import com.idea.group.neverhaveiever.Services.AnalyticsService
 import com.idea.group.neverhaveiever.Views.NeverHaveIEverFragment
 import mosquito.digital.template.mdpersistence.DatabaseUpdate
 import mosquito.digital.template.mdpersistence.PersistenceService
 
-class NeverHaveIEverController(presistenceService : PersistenceService, analyticsService: AnalyticsService, cardType : String)
+class NeverHaveIEverController(presistenceService : PersistenceService, analyticsService: AnalyticsService, cardType : String) :
+    ViewModel()
 {
     var presistenceService : PersistenceService
     var analyticsService: AnalyticsService;
@@ -78,4 +81,13 @@ class NeverHaveIEverController(presistenceService : PersistenceService, analytic
                 }
             })
     }
+
+    fun getTestData(contentType : String) : List<IHaveNeverCardAPIModel>
+    {
+        val items = mutableListOf<IHaveNeverCardAPIModel>();
+        items.add(IHaveNeverCardAPIModel(id = "1", info = "Had Sex on a Boat",votedBad = false, seen = false,cardType = contentType!!))
+        items.add(IHaveNeverCardAPIModel(id = "2", info = "Fallen down a hill drunk",votedBad = false, seen = false,cardType = contentType!!))
+        return items;
+    }
+
 }

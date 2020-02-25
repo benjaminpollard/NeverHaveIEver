@@ -11,8 +11,11 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.facebook.ads.*
 import com.idea.group.neverhaveiever.BuildConfig
+import com.idea.group.neverhaveiever.Controllers.BaseControllerFactory
 import com.idea.group.neverhaveiever.Controllers.NeverHaveIEverController
 import com.idea.group.neverhaveiever.Models.APIModels.IHaveNeverCardAPIModel
 import com.idea.group.neverhaveiever.R
@@ -24,6 +27,7 @@ import com.mindorks.placeholderview.SwipeDecor
 import com.mindorks.placeholderview.SwipePlaceHolderView
 import com.mindorks.placeholderview.SwipeViewBuilder
 import mosquito.digital.template.mdpersistence.PersistenceService
+import java.util.function.Consumer
 
 
 private const val ARG_PARAM1 = "param1"
@@ -48,8 +52,11 @@ class NeverHaveIEverFragment : Fragment() , IOnCardSwipe {
 
         arguments?.let {
             contentType = it.getString(ARG_PARAM1)
-            controller = NeverHaveIEverController(PersistenceService(),
-                AnalyticsService(),contentType!!)
+
+            controller = ViewModelProvider(this,BaseControllerFactory{
+                NeverHaveIEverController(PersistenceService(),AnalyticsService(),contentType!!)
+            }).get(NeverHaveIEverController::class.java)
+
         }
     }
 
@@ -151,25 +158,20 @@ class NeverHaveIEverFragment : Fragment() , IOnCardSwipe {
     }
 
     private fun setUpTestData(onClick: View.OnClickListener) {
-        cardCount = 1;
-        mSwipeView!!.addView(
-            IHaveNeverCardView(
-                this.context,
-                IHaveNeverCardAPIModel(id = "1", info = "Had Sex on a Boat",votedBad = false, seen = false,cardType = contentType!!),
-                mSwipeView,
-                onClick,
-                this
+        val testData = controller.getTestData(contentType!!);
+
+        cardCount = testData.count()
+        testData.forEach {
+            mSwipeView!!.addView(
+                IHaveNeverCardView(
+                    this.context,
+                    it,
+                    mSwipeView,
+                    onClick,
+                    this
+                )
             )
-        );
-        mSwipeView!!.addView(
-            IHaveNeverCardView(
-                this.context,
-                IHaveNeverCardAPIModel(id = "2", info = "Fallen down a hill drunk",votedBad = false, seen = false,cardType = contentType!!),
-                mSwipeView,
-                onClick,
-                this
-            )
-        )
+        }
     }
 
     override fun onAttach(context: Context) {
