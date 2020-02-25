@@ -5,7 +5,7 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.idea.group.neverhaveiever.Models.APIModels.IHaveNeverCardAPIModel;
+import com.idea.group.neverhaveiever.Models.APIModels.IHaveNeverCardModel;
 import com.idea.group.neverhaveiever.R;
 import com.idea.group.neverhaveiever.Views.Interfaces.IOnCardSwipe;
 import com.mindorks.placeholderview.SwipePlaceHolderView;
@@ -30,7 +30,7 @@ public class IHaveNeverCardView {
     @View(R.id.never_card_view_next)
      Button next;
 
-    public IHaveNeverCardAPIModel mProfile;
+    public IHaveNeverCardModel mProfile;
     public Context mContext;
     public SwipePlaceHolderView mSwipeView;
     android.view.View.OnClickListener onNext;
@@ -38,7 +38,7 @@ public class IHaveNeverCardView {
     @Position
     public int position;
 
-    public IHaveNeverCardView(Context context, IHaveNeverCardAPIModel profile, SwipePlaceHolderView swipeView, android.view.View.OnClickListener onNext , IOnCardSwipe OnCardSwipe) {
+    public IHaveNeverCardView(Context context, IHaveNeverCardModel profile, SwipePlaceHolderView swipeView, android.view.View.OnClickListener onNext , IOnCardSwipe OnCardSwipe) {
         mContext = context;
         mProfile = profile;
         mSwipeView = swipeView;

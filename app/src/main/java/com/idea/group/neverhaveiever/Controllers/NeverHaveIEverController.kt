@@ -1,10 +1,9 @@
 package com.idea.group.neverhaveiever.Controllers
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import com.idea.group.neverhaveiever.Models.APIModels.IHaveNeverCardAPIModel
+import com.idea.group.neverhaveiever.Models.APIModels.IHaveNeverCardModel
 import com.idea.group.neverhaveiever.Services.AnalyticsService
-import com.idea.group.neverhaveiever.Views.NeverHaveIEverFragment
 import mosquito.digital.template.mdpersistence.DatabaseUpdate
 import mosquito.digital.template.mdpersistence.PersistenceService
 
@@ -20,20 +19,23 @@ class NeverHaveIEverController(presistenceService : PersistenceService, analytic
         this.analyticsService = analyticsService;
     }
 
+    val cards: MutableLiveData<List<IHaveNeverCardModel>> by lazy {
+        MutableLiveData<List<IHaveNeverCardModel>>()
+    }
 
-    private fun getCards() : List<IHaveNeverCardAPIModel>
+    private fun getCards() : List<IHaveNeverCardModel>
     {
-        val list = mutableListOf<IHaveNeverCardAPIModel>()
-        list.add(IHaveNeverCardAPIModel(id = "1", info = "Had Sex on a Boat", seen = false,votedBad = false, cardType = ""))
-        list.add(IHaveNeverCardAPIModel(id = "2", info = "Fallen down a hill drunk", seen = false,votedBad = false, cardType = ""))
+        val list = mutableListOf<IHaveNeverCardModel>()
+        list.add(IHaveNeverCardModel(id = "1", info = "Had Sex on a Boat", seen = false,votedBad = false, cardType = ""))
+        list.add(IHaveNeverCardModel(id = "2", info = "Fallen down a hill drunk", seen = false,votedBad = false, cardType = ""))
 
-        list.removeAll { iHaveNeverCardAPIModel: IHaveNeverCardAPIModel -> list.any {
-            iHaveNeverCardAPIModel.votedBad
+        list.removeAll { iHaveNeverCardModel: IHaveNeverCardModel -> list.any {
+            iHaveNeverCardModel.votedBad
         } }
 
         list.random()
 
-        val listOfType = mutableListOf<IHaveNeverCardAPIModel>()
+        val listOfType = mutableListOf<IHaveNeverCardModel>()
 
         for (item in list.toList())
         {
@@ -44,7 +46,7 @@ class NeverHaveIEverController(presistenceService : PersistenceService, analytic
             }
         }
 
-        val listOfSeen = mutableListOf<IHaveNeverCardAPIModel>()
+        val listOfSeen = mutableListOf<IHaveNeverCardModel>()
 
         for (item in list.toList())
         {
@@ -55,6 +57,8 @@ class NeverHaveIEverController(presistenceService : PersistenceService, analytic
             }
         }
         list.addAll(list.lastIndex,listOfSeen)
+
+        cards.postValue(list)
         return list
     }
 
@@ -82,11 +86,11 @@ class NeverHaveIEverController(presistenceService : PersistenceService, analytic
             })
     }
 
-    fun getTestData(contentType : String) : List<IHaveNeverCardAPIModel>
+    fun getTestData(contentType : String) : List<IHaveNeverCardModel>
     {
-        val items = mutableListOf<IHaveNeverCardAPIModel>();
-        items.add(IHaveNeverCardAPIModel(id = "1", info = "Had Sex on a Boat",votedBad = false, seen = false,cardType = contentType!!))
-        items.add(IHaveNeverCardAPIModel(id = "2", info = "Fallen down a hill drunk",votedBad = false, seen = false,cardType = contentType!!))
+        val items = mutableListOf<IHaveNeverCardModel>();
+        items.add(IHaveNeverCardModel(id = "1", info = "Had Sex on a Boat",votedBad = false, seen = false,cardType = contentType!!))
+        items.add(IHaveNeverCardModel(id = "2", info = "Fallen down a hill drunk",votedBad = false, seen = false,cardType = contentType!!))
         return items;
     }
 

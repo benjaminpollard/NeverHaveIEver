@@ -11,13 +11,12 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.facebook.ads.*
 import com.idea.group.neverhaveiever.BuildConfig
 import com.idea.group.neverhaveiever.Controllers.BaseControllerFactory
 import com.idea.group.neverhaveiever.Controllers.NeverHaveIEverController
-import com.idea.group.neverhaveiever.Models.APIModels.IHaveNeverCardAPIModel
 import com.idea.group.neverhaveiever.R
 import com.idea.group.neverhaveiever.Services.AnalyticsService
 import com.idea.group.neverhaveiever.Views.CustomViews.IHaveNeverCardView
@@ -27,7 +26,6 @@ import com.mindorks.placeholderview.SwipeDecor
 import com.mindorks.placeholderview.SwipePlaceHolderView
 import com.mindorks.placeholderview.SwipeViewBuilder
 import mosquito.digital.template.mdpersistence.PersistenceService
-import java.util.function.Consumer
 
 
 private const val ARG_PARAM1 = "param1"
@@ -107,6 +105,21 @@ class NeverHaveIEverFragment : Fragment() , IOnCardSwipe {
         }
         setUpTestData(onClick)
 
+      //  too use when not using test data
+//        controller.cards.observe(this, Observer {
+//            mSwipeView!!.removeAllViews()
+//            it.forEach {
+//                mSwipeView!!.addView(
+//                    IHaveNeverCardView(
+//                        this.context,
+//                        it,
+//                        mSwipeView,
+//                        onClick,
+//                        this
+//                    )
+//                )
+//            }
+//        })
         refresherView = view.findViewById(R.id.refresh_view)
         refresherButton = view.findViewById(R.id.never_card_view_reload);
         refresherButton.setOnClickListener {
