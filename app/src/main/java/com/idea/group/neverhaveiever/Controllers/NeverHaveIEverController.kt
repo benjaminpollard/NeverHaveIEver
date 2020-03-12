@@ -4,30 +4,25 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.idea.group.neverhaveiever.Models.APIModels.IHaveNeverCardModel
 import com.idea.group.neverhaveiever.Services.AnalyticsService
+import com.idea.group.neverhaveiever.Services.QuestionApiService
 import mosquito.digital.template.mdpersistence.DatabaseUpdate
 import mosquito.digital.template.mdpersistence.PersistenceService
 
-class NeverHaveIEverController(presistenceService : PersistenceService, analyticsService: AnalyticsService, cardType : String) :
+class NeverHaveIEverController(val presistenceService : PersistenceService, val analyticsService: AnalyticsService,val questionService : QuestionApiService,val cardType : String) :
     ViewModel()
 {
-    var presistenceService : PersistenceService
-    var analyticsService: AnalyticsService;
-    var cardType : String
-    init {
-        this.presistenceService = presistenceService
-        this.cardType = cardType
-        this.analyticsService = analyticsService;
-    }
 
     val cards: MutableLiveData<List<IHaveNeverCardModel>> by lazy {
         MutableLiveData<List<IHaveNeverCardModel>>()
     }
 
-    private fun getCards() : List<IHaveNeverCardModel>
+    private suspend fun getCards() : List<IHaveNeverCardModel>
     {
+        questionService.getQuestions()
+
         val list = mutableListOf<IHaveNeverCardModel>()
-        list.add(IHaveNeverCardModel(id = "1", info = "Had Sex on a Boat", seen = false,votedBad = false, cardType = ""))
-        list.add(IHaveNeverCardModel(id = "2", info = "Fallen down a hill drunk", seen = false,votedBad = false, cardType = ""))
+//        list.add(IHaveNeverCardModel(id = "1", info = "Had Sex on a Boat", seen = false,votedBad = false, cardType = ""))
+//        list.add(IHaveNeverCardModel(id = "2", info = "Fallen down a hill drunk", seen = false,votedBad = false, cardType = ""))
 
         list.removeAll { iHaveNeverCardModel: IHaveNeverCardModel -> list.any {
             iHaveNeverCardModel.votedBad
@@ -62,7 +57,7 @@ class NeverHaveIEverController(presistenceService : PersistenceService, analytic
         return list
     }
 
-    fun ItemVotedBad(pos: Int)
+    suspend fun ItemVotedBad(pos: Int)
     {
             val item = getCards()[pos]
 
@@ -75,7 +70,7 @@ class NeverHaveIEverController(presistenceService : PersistenceService, analytic
 
     }
 
-    fun ItemSeen(pos: Int)
+    suspend fun ItemSeen(pos: Int)
     {
             val item = getCards()[pos]
 

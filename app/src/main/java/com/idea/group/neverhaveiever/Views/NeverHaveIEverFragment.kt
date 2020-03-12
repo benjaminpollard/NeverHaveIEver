@@ -19,6 +19,7 @@ import com.idea.group.neverhaveiever.Controllers.BaseControllerFactory
 import com.idea.group.neverhaveiever.Controllers.NeverHaveIEverController
 import com.idea.group.neverhaveiever.R
 import com.idea.group.neverhaveiever.Services.AnalyticsService
+import com.idea.group.neverhaveiever.Services.QuestionApiService
 import com.idea.group.neverhaveiever.Views.CustomViews.IHaveNeverCardView
 import com.idea.group.neverhaveiever.Views.Interfaces.IMenuHost
 import com.idea.group.neverhaveiever.Views.Interfaces.IOnCardSwipe
@@ -50,9 +51,10 @@ class NeverHaveIEverFragment : Fragment() , IOnCardSwipe {
 
         arguments?.let {
             contentType = it.getString(ARG_PARAM1)
-
+            //todo add DI
             controller = ViewModelProvider(this,BaseControllerFactory{
-                NeverHaveIEverController(PersistenceService(),AnalyticsService(),contentType!!)
+                NeverHaveIEverController(PersistenceService(),AnalyticsService(),
+                    QuestionApiService(),contentType!!)
             }).get(NeverHaveIEverController::class.java)
 
         }
@@ -233,6 +235,7 @@ class NeverHaveIEverFragment : Fragment() , IOnCardSwipe {
     }
 
     override fun OnSwipe(pos: Int) {
+        //todo work with suspend
         controller.ItemSeen(pos)
       if (cardCount == pos)
         {
@@ -251,6 +254,7 @@ class NeverHaveIEverFragment : Fragment() , IOnCardSwipe {
     }
 
     override fun OnBadSwipe(pos: Int) {
+        //todo work with suspend
         controller.ItemVotedBad(pos)
     }
 }

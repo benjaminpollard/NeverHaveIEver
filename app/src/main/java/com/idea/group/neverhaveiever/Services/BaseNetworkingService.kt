@@ -7,7 +7,7 @@ class BaseNetworkingService
 {
     fun getNetworkingService (): Retrofit {
        return Retrofit.Builder()
-            .baseUrl("https://api.example.com")
+            .baseUrl("http://neverhaveieverben.herokuapp.com/")
             .addConverterFactory(MoshiConverterFactory.create())
             .build()
     }

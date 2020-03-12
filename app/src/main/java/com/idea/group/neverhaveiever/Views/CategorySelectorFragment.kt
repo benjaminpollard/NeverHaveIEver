@@ -41,10 +41,8 @@ class CategorySelectorFragment : Fragment() {
 
         AdSettings.addTestDevice("HASHED ID")
 
-        // Find the Ad Container
         val adContainer = view.findViewById(R.id.banner_container) as LinearLayout
-        //this.activity!!.window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
-        // Add the ad view to your activity layout
+
         adView = AdView(this.context, "638417063572474_638420086905505", AdSize.BANNER_HEIGHT_50)
         adContainer.addView(adView)
 
