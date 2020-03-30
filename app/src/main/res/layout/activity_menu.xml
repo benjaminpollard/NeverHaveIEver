@@ -99,7 +99,7 @@
                     android:textSize="22sp"
                     android:textColor="@android:color/white"
                     android:fontFamily="sans-serif-medium"
-
+                    android:visibility="gone"
                     android:background="@drawable/menu_button"
                     android:text="Settings" />
 

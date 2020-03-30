@@ -29,13 +29,23 @@ class CategorySelectorFragment : Fragment() {
             container, false
         )
 
-        val adultButton : Button = view.findViewById(R.id.category_selector_adults)
-        adultButton.setOnClickListener {
+        val cleanButton : Button = view.findViewById(R.id.category_selector_clean)
+        cleanButton.setOnClickListener {
             listener!!.GoToIHaveNeverScreen(NeverHaveIEverFragment.CARDS_CLEAN)
         }
 
-        val teenButton : Button = view.findViewById(R.id.category_selector_teen)
-        teenButton.setOnClickListener {
+        val exposedButton : Button = view.findViewById(R.id.category_selector_exposed)
+        exposedButton.setOnClickListener {
+            listener!!.GoToIHaveNeverScreen(NeverHaveIEverFragment.CARDS_EXPOSED)
+        }
+
+        val couplesButton : Button = view.findViewById(R.id.category_selector_couples)
+        couplesButton.setOnClickListener {
+            listener!!.GoToIHaveNeverScreen(NeverHaveIEverFragment.CARDS_COUPLES)
+        }
+
+        val naughtyButton : Button = view.findViewById(R.id.category_selector_naughty)
+        naughtyButton.setOnClickListener {
             listener!!.GoToIHaveNeverScreen(NeverHaveIEverFragment.CARDS_NAUGHTY)
         }
 

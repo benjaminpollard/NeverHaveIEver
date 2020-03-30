@@ -19,6 +19,7 @@ import com.idea.group.neverhaveiever.Controllers.BaseControllerFactory
 import com.idea.group.neverhaveiever.Controllers.NeverHaveIEverController
 import com.idea.group.neverhaveiever.R
 import com.idea.group.neverhaveiever.Services.AnalyticsService
+import com.idea.group.neverhaveiever.Services.PersistenceService
 import com.idea.group.neverhaveiever.Services.QuestionApiService
 import com.idea.group.neverhaveiever.Views.CustomViews.IHaveNeverCardView
 import com.idea.group.neverhaveiever.Views.Interfaces.IMenuHost
@@ -26,12 +27,23 @@ import com.idea.group.neverhaveiever.Views.Interfaces.IOnCardSwipe
 import com.mindorks.placeholderview.SwipeDecor
 import com.mindorks.placeholderview.SwipePlaceHolderView
 import com.mindorks.placeholderview.SwipeViewBuilder
-import mosquito.digital.template.mdpersistence.PersistenceService
+import io.realm.Realm
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
 
 
 private const val ARG_PARAM1 = "param1"
 
-class NeverHaveIEverFragment : Fragment() , IOnCardSwipe {
+class NeverHaveIEverFragment : Fragment() , CoroutineScope, IOnCardSwipe  {
+
+    private var job: Job = Job()
+
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main + job
+
 
     private var contentType: String? = null
     private var listener: IMenuHost? = null
@@ -53,7 +65,8 @@ class NeverHaveIEverFragment : Fragment() , IOnCardSwipe {
             contentType = it.getString(ARG_PARAM1)
             //todo add DI
             controller = ViewModelProvider(this,BaseControllerFactory{
-                NeverHaveIEverController(PersistenceService(),AnalyticsService(),
+                NeverHaveIEverController(
+                    PersistenceService(Realm.getDefaultInstance()),AnalyticsService(),
                     QuestionApiService(),contentType!!)
             }).get(NeverHaveIEverController::class.java)
 
@@ -87,6 +100,10 @@ class NeverHaveIEverFragment : Fragment() , IOnCardSwipe {
         topHolder!!.addView(image)
 
         setUpSwipeView(view)
+        launch{
+            controller.getCards()
+        }
+
         return view
     }
 
@@ -105,27 +122,28 @@ class NeverHaveIEverFragment : Fragment() , IOnCardSwipe {
         val onClick = View.OnClickListener {
             mSwipeView!!.doSwipe(true)
         }
-        setUpTestData(onClick)
 
-      //  too use when not using test data
-//        controller.cards.observe(this, Observer {
-//            mSwipeView!!.removeAllViews()
-//            it.forEach {
-//                mSwipeView!!.addView(
-//                    IHaveNeverCardView(
-//                        this.context,
-//                        it,
-//                        mSwipeView,
-//                        onClick,
-//                        this
-//                    )
-//                )
-//            }
-//        })
+        controller.cards.observe(this, Observer {
+            mSwipeView!!.removeAllViews()
+            it.forEach { it1 ->
+                mSwipeView!!.addView(
+                    IHaveNeverCardView(
+                        this.context,
+                        it1,
+                        mSwipeView,
+                        onClick,
+                        this
+                    )
+                )
+            }
+        })
+
         refresherView = view.findViewById(R.id.refresh_view)
         refresherButton = view.findViewById(R.id.never_card_view_reload);
         refresherButton.setOnClickListener {
-            setUpTestData(onClick)
+            launch{
+                controller.getCards()
+            }
             refresherView!!.visibility = View.GONE
         }
     }
@@ -172,22 +190,22 @@ class NeverHaveIEverFragment : Fragment() , IOnCardSwipe {
 
     }
 
-    private fun setUpTestData(onClick: View.OnClickListener) {
-        val testData = controller.getTestData(contentType!!);
-
-        cardCount = testData.count()
-        testData.forEach {
-            mSwipeView!!.addView(
-                IHaveNeverCardView(
-                    this.context,
-                    it,
-                    mSwipeView,
-                    onClick,
-                    this
-                )
-            )
-        }
-    }
+//    private fun setUpTestData(onClick: View.OnClickListener) {
+//        val testData = controller.getTestData(contentType!!);
+//
+//        cardCount = testData.count()
+//        testData.forEach {
+//            mSwipeView!!.addView(
+//                IHaveNeverCardView(
+//                    this.context,
+//                    it,
+//                    mSwipeView,
+//                    onClick,
+//                    this
+//                )
+//            )
+//        }
+//    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -212,6 +230,7 @@ class NeverHaveIEverFragment : Fragment() , IOnCardSwipe {
         if (interstitialAd != null) {
             interstitialAd.destroy()
         }
+        job.cancel()
 
         super.onDestroy()
     }
@@ -236,7 +255,10 @@ class NeverHaveIEverFragment : Fragment() , IOnCardSwipe {
 
     override fun OnSwipe(pos: Int) {
         //todo work with suspend
-        controller.ItemSeen(pos)
+        launch {
+            controller.ItemSeen(pos)
+
+        }
       if (cardCount == pos)
         {
             refresherView!!.visibility = View.VISIBLE
@@ -255,6 +277,8 @@ class NeverHaveIEverFragment : Fragment() , IOnCardSwipe {
 
     override fun OnBadSwipe(pos: Int) {
         //todo work with suspend
-        controller.ItemVotedBad(pos)
+        launch {
+            controller.ItemVotedBad(pos)
+        }
     }
 }

@@ -5,7 +5,7 @@ import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 import io.realm.annotations.RealmClass
 
+//cant use data class with realm yet
 @RealmClass
-
-data class IHaveNeverCardModel(@PrimaryKey var id: String = "",
-                               var info: String = "", var seen: Boolean, var votedBad: Boolean, var cardType : String) : RealmObject()
+public open class IHaveNeverCardModel( var id: String = "",
+                                @PrimaryKey var info: String = "", var seen: Boolean = false, var votedBad: Boolean= false, var cardType : String = "") : RealmObject()

@@ -7,11 +7,24 @@
     android:background="@drawable/never_have_i_ever_activity_background"
 >
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/textView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/swipeView"
+        app:layout_constraintTop_toTopOf="@+id/swipeView"
+        android:indeterminate="true"
+        android:indeterminateTintMode="src_atop"
+        android:indeterminateTint="@android:color/white"/>
+
     <TextView
         android:id="@+id/textView2"
         android:layout_width="0dp"
         android:layout_height="40dp"
-        android:text="Swipe Left to not see the question again!"
+        android:text="Swipe Left to never see the question again!"
         android:textColor="@android:color/white"
         android:gravity="center"
         android:fontFamily="sans-serif-medium"

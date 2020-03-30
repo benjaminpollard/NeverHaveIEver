@@ -7,8 +7,7 @@
     android:background="@drawable/never_have_i_ever_activity_background"
 >
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/banner_container"
@@ -54,33 +53,63 @@
                 android:padding="30dp">
 
                 <Button
-                    android:id="@+id/category_selector_teen"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/category_selector_naughty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+
+                    android:layout_marginBottom="0dp"
+                    android:background="@drawable/next_button"
+                    android:fontFamily="sans-serif-medium"
+                    android:minWidth="200dp"
+                    android:text="NAUGHTY"
+
+                    android:textColor="@android:color/white"
+                    android:textSize="22sp" />
+
+
+                <Button
+                    android:id="@+id/category_selector_exposed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+
+                    android:layout_marginBottom="0dp"
+                    android:background="@drawable/next_button"
+                    android:fontFamily="sans-serif-medium"
+                    android:minWidth="200dp"
+                    android:text="EXPOSED"
+
+                    android:textColor="@android:color/white"
+                    android:textSize="22sp" />
+
+                <Button
+                    android:id="@+id/category_selector_couples"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="40dp"
 
                     android:layout_marginBottom="40dp"
-                    android:minWidth="200dp"
-                    android:textSize="22sp"
-                    android:textColor="@android:color/white"
-                    android:fontFamily="sans-serif-medium"
-
                     android:background="@drawable/next_button"
-                    android:text="Teen" />
+                    android:fontFamily="sans-serif-medium"
+                    android:minWidth="200dp"
+                    android:text="COUPLES"
 
+                    android:textColor="@android:color/white"
+                    android:textSize="22sp" />
 
                 <Button
-                    android:id="@+id/category_selector_adults"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/category_selector_clean"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="40dp"
-                    android:minWidth="200dp"
-                    android:textSize="22sp"
-                    android:textColor="@android:color/white"
-                    android:fontFamily="sans-serif-medium"
-
                     android:background="@drawable/next_button"
-                    android:text="Adult" />
+                    android:fontFamily="sans-serif-medium"
+                    android:minWidth="200dp"
+                    android:text="CLEAN"
+
+                    android:textColor="@android:color/white"
+                    android:textSize="22sp" />
             </LinearLayout>
 
 
